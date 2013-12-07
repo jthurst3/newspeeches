@@ -1,7 +1,7 @@
 # scraper.py
 # scrapes a political speech from the specified website
 # J. Hassler Thurston
-# RocHack Hackathon December7, 2013
+# RocHack Hackathon December 7, 2013
 
 from bs4 import BeautifulSoup
 import urllib
@@ -15,8 +15,8 @@ remove_parameters = ['<','>','{','}','\t','www.','        this page']
 # list of things that must be present in HTML text
 must_have_items = ['.']
 
-# gets a list of sentences from the transcript of the speech found on the specified webpage
-def get_sentence_list(webpage):
+# gets a list of relevant lines from the transcript of the speech found on the specified webpage
+def get_line_list(webpage):
 	html = urllib.urlopen(webpage).read() # fetch HTML from webpage
 	soup = BeautifulSoup(html)
 	text = soup.get_text() # get the text from the HTML page
@@ -43,10 +43,6 @@ def convert_list_to_ascii(ls):
 			pass
 		ascii.append(newline)
 	return ascii
-
-if __name__ == '__main__':
-	get_sentence_list('http://www.presidentialrhetoric.com/speeches/08.28.13.print.html')
-
 
 
 
