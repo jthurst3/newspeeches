@@ -48,9 +48,18 @@ def add_word_fun():
 
 # main program
 def main():
-	export_fun()
+	#export_fun()
 	add_word_fun()
-
+	parse('database/Barack Obama/01.21.13.csv')
 
 if __name__ == '__main__':
 	main()
+
+
+
+
+
+
+
+
+
