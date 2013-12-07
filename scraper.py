@@ -27,9 +27,11 @@ def get_line_list(webpage):
 	# from http://stackoverflow.com/questions/2793324/is-there-a-simple-way-to-delete-a-list-element-by-value-in-python
 	for param in remove_parameters:
 		ascii = [x for x in ascii if (param not in x)]
+	politician = ascii[0] # assume the politician's name is the first element in the list (good for current website supported)
+	#print politician
 	for item in must_have_items:
 		ascii = [x for x in ascii if (item in x)]
-	return ascii
+	return ascii, politician
 
 # converts a list to ASCII format, where any line with unicode characters gets removed
 def convert_list_to_ascii(ls):
@@ -43,8 +45,6 @@ def convert_list_to_ascii(ls):
 			pass
 		ascii.append(newline)
 	return ascii
-
-
 
 
 
