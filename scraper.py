@@ -3,12 +3,53 @@
 # J. Hassler Thurston
 # RocHack Hackathon December7, 2013
 
-from BeautifulSoup import BeautifulSoup
-import url
+from bs4 import BeautifulSoup
+import urllib
 
-def scraper(webpage):
-	html = urllib.urlopen(webpage)
-	print html
+# websites supported = http://www.presidentialrhetoric.com/
+
+# list of things to be removed from HTML text
+remove_items = ['','print','close window',' ']
+# list of things to be removed from HTML text, if text contains these items
+remove_parameters = ['<','>','{','}','\t','www.','        this page']
+# list of things that must be present in HTML text
+must_have_items = ['.']
+
+# gets a list of sentences from the transcript of the speech found on the specified webpage
+def get_sentence_list(webpage):
+	html = urllib.urlopen(webpage).read() # fetch HTML from webpage
+	soup = BeautifulSoup(html)
+	text = soup.get_text() # get the text from the HTML page
+	split = text.split('\n') # split on newlines
+	ascii = convert_list_to_ascii(split)
+	for item in remove_items:
+		ascii = [x for x in ascii if x != item]
+	# from http://stackoverflow.com/questions/2793324/is-there-a-simple-way-to-delete-a-list-element-by-value-in-python
+	for param in remove_parameters:
+		ascii = [x for x in ascii if (param not in x)]
+	for item in must_have_items:
+		ascii = [x for x in ascii if (item in x)]
+	return ascii
+
+# converts a list to ASCII format, where any line with unicode characters gets removed
+def convert_list_to_ascii(ls):
+	ascii = []
+	for line in ls:
+		newline = ''
+		try:
+			# from http://stackoverflow.com/questions/2365411/python-convert-unicode-to-ascii-without-errors
+			newline = line.encode('ascii')
+		except UnicodeEncodeError:
+			pass
+		ascii.append(newline)
+	return ascii
 
 if __name__ == '__main__':
-	scraper('http://www.google.com')
+	get_sentence_list('http://www.presidentialrhetoric.com/speeches/08.28.13.print.html')
+
+
+
+
+
+
+
