@@ -7,7 +7,7 @@ import os
 
 from scraper import *
 from get_words import *
-from parser import *
+from parser2 import *
 
 # TODO: use os.path.set() instead of just referencing local (Mac OS X) filename
 
@@ -53,7 +53,7 @@ def main():
 	parse('database/Barack Obama/01.21.13.csv')
 
 if __name__ == '__main__':
-	main()
+	get_initial_rules()
 
 
 
